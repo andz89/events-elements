@@ -1,11 +1,14 @@
 import { useSelector } from "react-redux";
 import { selectAllPosts } from "./postsSlice";
-import {FaArrowRight} from  "react-icons/fa"
+// import {FaArrowRight} from  "react-icons/fa"
 import TimeAgo from "./TimeAgo";
 import ReactionButtons from "./ReactionButtons";
+import Comments from "./Comments";
+import AddComments from "./AddComments";
+import { useState } from "react";
 const PostsList = () => {
   const posts = useSelector(selectAllPosts);
-
+  const [viewComments, setViewComments]= useState(false)
   const orderedPosts = posts
     .slice()
     .sort((a, b) => b.date.localeCompare(a.date));
@@ -13,7 +16,7 @@ const PostsList = () => {
   const renderedPosts = orderedPosts.map((post) => (
     <article key={post.id}>
       
-<div className="w-96 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+<div className="w-[400px] p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     
     <div className="flex flex-col">
     <h5 className=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>
@@ -28,11 +31,24 @@ const PostsList = () => {
     <br />
     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{post.content }</p>
    
-    <div className="inline-flex items-center px-2 py-1 text-sm  mb-2 font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer">
-        Read more  <FaArrowRight  className="ml-2"/>
+    <div className="flex justify-end items-center">
+      <div className="flex items-center p-1 text-xs   mb-2   text-center text-white bg-slate-600 rounded  hover:bg-slate-700   cursor-pointer">
+      Read more   
+      </div>
+    
       
     </div>
     <ReactionButtons post={post} />
+    <div className="mt-5">
+    <div className="flex justify-end">
+    <small className="cursor-pointer" onClick={()=>setViewComments(prev=>!prev)}>{!viewComments ?  <span>View</span>: <span>Hide</span>}{" "}{post.comments.length} Comments </small>
+    </div>
+    {viewComments && <Comments comments={post.comments} />}
+  
+   
+    <AddComments postId={post.id} />
+    </div>
+  
 </div>
     </article>
   ));

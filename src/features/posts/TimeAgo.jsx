@@ -10,7 +10,7 @@ const TimeAgo = ({ timestamp }) => {
 
     return (
         <small className='text-slate-500' title={timestamp}>
-        Posted: <i>{timeAgo}</i>
+       <i>{timeAgo}</i>
         </small>
     )
 }

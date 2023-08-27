@@ -15,6 +15,23 @@ const initialState = [
       rocket: 0,
       coffee: 0,
     },
+    comments: [
+      {
+        userEmail: "andz@gmail.com",
+        comment: "Nice, excited to see this event",
+        date: sub(new Date(), { minutes: 10 }).toISOString(),
+      },
+      {
+        userEmail: "gwill@gmail.com",
+        comment: "Me too!",
+        date: sub(new Date(), { minutes: 10 }).toISOString(),
+      },
+      {
+        userEmail: "virginia@gmail.com",
+        comment: "Happy to see you both!",
+        date: sub(new Date(), { minutes: 10 }).toISOString(),
+      },
+    ],
   },
   {
     id: "2",
@@ -31,6 +48,23 @@ const initialState = [
       rocket: 0,
       coffee: 0,
     },
+    comments: [
+      {
+        userEmail: "virginia@gmail.com",
+        comment: "Love this? andz?!",
+        date: sub(new Date(), { minutes: 10 }).toISOString(),
+      },
+      {
+        userEmail: "andz@gmail.com",
+        comment: "Yes my dear!",
+        date: sub(new Date(), { minutes: 10 }).toISOString(),
+      },
+      {
+        userEmail: "gwill@gmail.com",
+        comment: "so sweet!",
+        date: sub(new Date(), { minutes: 10 }).toISOString(),
+      },
+    ],
   },
 ];
 
@@ -56,6 +90,7 @@ const postsSlice = createSlice({
               rocket: 0,
               coffee: 0,
             },
+            comments: [{ userEmail: "", comment: "", date: "" }],
           },
         };
       },
@@ -67,11 +102,18 @@ const postsSlice = createSlice({
         existingPost.reactions[reaction]++;
       }
     },
+    commentAdded: (state, action) => {
+      const { postId, userEmail, comment, date } = action.payload;
+      const existingPost = state.find((post) => post.id === postId);
+      if (existingPost) {
+        existingPost.comments.push({ userEmail, comment, date });
+      }
+    },
   },
 });
 
 export const selectAllPosts = (state) => state.posts;
 
-export const { postAdded, reactionAdded } = postsSlice.actions;
+export const { postAdded, reactionAdded, commentAdded } = postsSlice.actions;
 
 export default postsSlice.reducer;
