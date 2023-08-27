@@ -90,7 +90,7 @@ const postsSlice = createSlice({
               rocket: 0,
               coffee: 0,
             },
-            comments: [{ userEmail: "", comment: "", date: "" }],
+            comments: [],
           },
         };
       },
@@ -99,6 +99,18 @@ const postsSlice = createSlice({
       const { postId, reaction } = action.payload;
       const existingPost = state.find((post) => post.id === postId);
       if (existingPost) {
+        // const iconTarget = Object.entries(existingPost.reactions).find(
+        //   (e) => e[0] === reaction
+        // );
+        // console.log(iconTarget[1]);
+        // if (iconTarget[1] == 0) {
+        //   // console.log(existingPost.reactions[reaction]++);
+
+        //   existingPost.reactions = { ...existingPost.reactions, [reaction]: 1 };
+        // } else {
+        //   // existingPost.reactions[reaction]--;
+        //   console.log("minus one");
+        // }
         existingPost.reactions[reaction]++;
       }
     },

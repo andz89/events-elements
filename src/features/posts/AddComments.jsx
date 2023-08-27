@@ -3,15 +3,15 @@ import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { commentAdded } from './postsSlice'
 import {   nanoid } from "@reduxjs/toolkit";
-const AddComment = ({postId} ) => {
+const AddComment = ({post} ) => {
    const date = new Date().toISOString()
-    const userEmail = "users"+ nanoid() //for testing only. this data should from users data when login.
+    const userEmail = post.organizer //for testing only. this data should from users data when login.
     const [comment, setComment] = useState("")
     const dispatch = useDispatch();
 
   const handleCommentSubmit = (e) => {
     e.preventDefault()
-    console.log(postId, userEmail, comment)
+    const postId = post.id
     dispatch(commentAdded({postId, userEmail, comment,date}));
  setComment("")
   };

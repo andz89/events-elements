@@ -5,10 +5,10 @@ import TimeAgo from "./TimeAgo";
 import ReactionButtons from "./ReactionButtons";
 import Comments from "./Comments";
 import AddComments from "./AddComments";
-import { useState } from "react";
+ 
 const PostsList = () => {
   const posts = useSelector(selectAllPosts);
-  const [viewComments, setViewComments]= useState(false)
+
   const orderedPosts = posts
     .slice()
     .sort((a, b) => b.date.localeCompare(a.date));
@@ -16,7 +16,7 @@ const PostsList = () => {
   const renderedPosts = orderedPosts.map((post) => (
     <article key={post.id}>
       
-<div className="w-[400px] p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+<div className="w-[800px] p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     
     <div className="flex flex-col">
     <h5 className=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>
@@ -40,13 +40,11 @@ const PostsList = () => {
     </div>
     <ReactionButtons post={post} />
     <div className="mt-5">
-    <div className="flex justify-end">
-    <small className="cursor-pointer" onClick={()=>setViewComments(prev=>!prev)}>{!viewComments ?  <span>View</span>: <span>Hide</span>}{" "}{post.comments.length} Comments </small>
-    </div>
-    {viewComments && <Comments comments={post.comments} />}
+ 
+  <Comments comments={post.comments} /> 
   
    
-    <AddComments postId={post.id} />
+    <AddComments post={post} />
     </div>
   
 </div>
